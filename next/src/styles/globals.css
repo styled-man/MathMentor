@@ -4,9 +4,9 @@
 
 
 .small-modal{
-    @apply w-[47vw] h-60;
+    @apply w-[47vw] h-60 z-10 absolute;
 }
 
 .large-modal{
-    @apply my-5 h-[95vh] w-[90vw] mx-[5vw] z-50;
+    @apply my-5 h-[95vh] w-[90vw] mx-[5vw] z-50 fixed;
 }

@@ -1,32 +1,41 @@
 import React from "react"
 import { useState } from "react"
+import Link from "next/link"
 
 interface IModal {
     yPosition: number
     userProblem: string
     infoForUser: string
+    youtubeLink?: string
+    moreInfoForUser?: string
 }
 
-const Modal = ({ userProblem, yPosition, infoForUser }: IModal) => {
+const Modal = ({ userProblem, yPosition, infoForUser, moreInfoForUser, youtubeLink }: IModal) => {
     const [isModalSmall, setIsModalSmall] = useState<boolean>(true)
 
     return (
         <>
-            {isModalSmall && (
+            {
                 <div
-                    className="fixed bottom-0 left-0 right-0 top-0 z-40 cursor-pointer backdrop-blur"
-                    onClick={() => setIsModalSmall(false)}
+                    style={{
+                        backdropFilter: isModalSmall ? "blur(0px)" : "blur(10px)",
+                        height: "100vh",
+                        width: "100vw",
+                        zIndex: isModalSmall ? 10 : 49,
+                    }}
+                    className="fixed top-0 h-screen w-screen cursor-pointer duration-300"
+                    onClick={() => setIsModalSmall(true)}
                 />
-            )}
+            }
 
             <div
                 style={{
                     top: isModalSmall ? yPosition : 0,
-                    position: isModalSmall ? "absolute" : "fixed",
                 }}
                 className={`${
                     isModalSmall ? "small-modal" : "large-modal"
-                } cursor-pointer bg-gray-200 p-2 shadow-2xl duration-1000`}
+                } w-[60ch] cursor-pointer bg-gray-200 p-2 shadow-2xl duration-300`}
+
                 onClick={() => {
                     setIsModalSmall(!isModalSmall)
                 }}
@@ -35,6 +44,16 @@ const Modal = ({ userProblem, yPosition, infoForUser }: IModal) => {
                 <span className="font-bold text-red-500">{userProblem}</span>
                 <br />
                 {infoForUser}
+
+                <span style={{ display: isModalSmall ? "none" : "initial" }}>
+                    <br />
+                    {moreInfoForUser}
+                    <br />
+                    Here is a video that might help out:{" "}
+                    <Link href={youtubeLink || ""} target="_blank">
+                        {youtubeLink}
+                    </Link>
+                </span>
             </div>
         </>
     )
