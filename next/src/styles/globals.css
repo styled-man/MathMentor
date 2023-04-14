@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.small-modal{
+    @apply w-[47vw] h-60;
+}
+
+.large-modal{
+    @apply my-5 h-[95vh] w-[90vw] mx-[5vw] z-50;
+}
