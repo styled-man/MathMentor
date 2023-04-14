@@ -1,5 +1,6 @@
 import Image from "next/image"
 import React, { useState } from "react"
+import Modal from "./components/Modal"
 
 const learn = () => {
     return (
@@ -37,11 +38,19 @@ function InteractivityArea() {
 
     return (
         <>
-            <div className="relative w-[50vw] h-[90vh] -top-[1.75rem] border-2 border-red-500 right-3">
+            <div className="relative -top-[1.75rem] right-3 h-[90vh] w-[50vw] border-2 border-red-500">
+                <Modal
+                    userProblem={"Vector Mathematics"}
+                    infoForUser="Information"
+                    yPosition={10}
+                    youtubeLink="https://www.youtube.com/"
+                    youtubeLinkTitle="Math me like I'm 5"
+                    moreInfoForUser="more information"
+                />
             </div>
             <form
                 onSubmit={handleSubmit}
-                className="flex w-[45vw] items-center bg-gray-100 px-4 py-3 absolute bottom-3 right-12"
+                className="absolute bottom-3 right-12 flex w-[45vw] items-center bg-gray-100 px-4 py-3"
             >
                 <input
                     type="text"
