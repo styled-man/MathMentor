@@ -1,6 +1,6 @@
 import Image from "next/image"
 import React, { useState } from "react"
-import Modal from "~/components/modal"
+import Modal from "./components/Modal"
 
 const learn = () => {
     return (
