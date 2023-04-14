@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+import requests
 import os
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from langchain.llms import OpenAI
@@ -20,5 +22,25 @@ tools = [
     )
 ]
 
-mrkl = initialize_agent(tools, llm, agent="zero-shot-react-description")
-print(mrkl.run("What is the integral of 1/x?"))
+
+# API endpoint URL and query parameters
+url = "http://api.wolframalpha.com/v2/query"
+params = {
+    "appid": os.getenv("WOLFRAM_ALPHA_APPID"),
+    "input": "solve 3x-7 = 11",
+    "podstate": "Result__Step-by-step solution",
+    "format": "plaintext",
+}
+
+# Send HTTP GET request to the API endpoint and get the response
+response = requests.get(url, params=params)
+
+# Parse the XML content of the response into an ElementTree object
+root = ET.fromstring(response.content)
+subpods = root.findall("./pod[@title='Results']/subpod")
+
+for subpod in subpods:
+    if subpod.get("title") == "Possible intermediate steps":
+        plaintext_tag = subpod.find("plaintext")
+        if plaintext_tag is not None:
+            print(plaintext_tag.text)
