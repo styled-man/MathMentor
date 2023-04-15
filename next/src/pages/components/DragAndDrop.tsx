@@ -9,9 +9,10 @@ interface DragItem {
 
 interface DragAndDropProps {
   items: DragItem[];
+  className?: string;
 }
 
-const DragAndDrop: React.FC<DragAndDropProps> = ({ items }) => {
+const DragAndDrop: React.FC<DragAndDropProps> = ({ items, className }) => {
   const [draggedItem, setDraggedItem] = useState<DragItem | null>(null);
   const [droppedItems, setDroppedItems] = useState<DragItem[]>([]);
 
@@ -70,7 +71,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ items }) => {
 
   return (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <div onDrop={handleDrop} onDragOver={handleDragOver}>
+    <div onDrop={handleDrop} className={className} onDragOver={handleDragOver}>
       {items.map((item) => (
         <div
           key={item.id}
