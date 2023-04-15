@@ -11,10 +11,7 @@ interface IMessageContainer {
 
 const MessageContainer = ({ conversations, useRefHook }: IMessageContainer) => {
     return (
-        <div
-            className="flex h-[100%] w-[100%] flex-col overflow-auto bg-blue-200 py-5"
-            ref={useRefHook}
-        >
+        <div className="flex h-[100%] w-[100%] flex-col overflow-auto py-5" ref={useRefHook}>
             {conversations.map(e => (
                 <MessageBubble key={e.message} message={e.message} isSentByUser={e.isSentByUser} />
             ))}

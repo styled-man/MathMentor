@@ -13,7 +13,7 @@ const MessageBubble = ({ isSentByUser, message }: IMessageBubble) => {
                 marginLeft: isSentByUser ? "auto" : "1.25rem",
                 marginRight: isSentByUser ? "1.25rem" : "auto",
             }}
-            className="mb-1 w-fit min-w-[45%] max-w-[90%] rounded-2xl p-5 text-white"
+            className="mb-1 w-fit  max-w-[90%]  break-all rounded-2xl p-5 text-white"
         >
             {message}
         </div>
