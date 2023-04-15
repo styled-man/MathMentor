@@ -1,7 +1,13 @@
 import React, { type FormEvent, useRef, type MutableRefObject } from "react"
+import { TbFileUpload } from "react-icons/tb"
 import { uploadToS3 } from "./s3Utils"
+import Image from "next/image"
 
-const FileUploadForm = () => {
+type Props = {
+    className?: string
+}
+
+const FileUploadForm = ({ className }: Props) => {
     const fileInputRef: MutableRefObject<HTMLInputElement | null> = useRef(null)
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -26,9 +32,8 @@ const FileUploadForm = () => {
 
     return (
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        <form onSubmit={handleSubmit}>
-            <input ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png" />
-            <button type="submit">Upload</button>
+        <form onSubmit={handleSubmit} className={className}>
+            <input className="text-black relative left-2" ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png" />
         </form>
     )
 }

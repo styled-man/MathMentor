@@ -23,9 +23,14 @@ const Home: NextPage = () => {
     ]
 
     return (
-        <div>
+        <div className="relative">
             <Scene />
-            <DragAndDrop />
+            <div className="absolute top-[50%] translate-y-[-60%]  pl-5">
+                <h1 className="text-8xl mb-10">
+                    Math<span className="font-bold">Mentor</span>
+                </h1>
+                <DragAndDrop />
+            </div>
         </div>
     )
 }
