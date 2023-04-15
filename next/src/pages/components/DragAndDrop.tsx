@@ -1,10 +1,9 @@
 import Image from "next/image"
 import React, { useState } from "react"
-import { api } from "~/utils/api"
 
 interface DragItem {
     id: string
-    preview?: string
+    preview: string
     name: string
 }
 
@@ -25,21 +24,28 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ items, className }) => {
         event.preventDefault()
     }
 
-    const uploadDocument = api.document.upload.useMutation({
-        onMutate({ image, imageName }) {
-            //
-            console.log("something")
-        },
-    })
+    async function uploadDocument(name: string, preview: string) {
+        const response = await fetch("/api/document/azure", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                preview: preview,
+            }),
+        })
+
+        return (await response.json()) as { url: string }
+    }
 
     function handleDocumentUpload() {
-        droppedItems.forEach(({ name, preview }) => {
-            if (!preview) {
-                return
-            }
-            console.log(name, preview)
-            uploadDocument.mutate({ image: name, imageName: preview })
-        })
+        for (const document of droppedItems) {
+            const { name, preview } = document
+
+            const imageLink = uploadDocument(name, preview)
+            console.log(imageLink)
+        }
     }
 
     const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
@@ -74,7 +80,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ items, className }) => {
         fileInput.click()
     }
 
-    const createPreviewImage = (file: File): Promise<string | undefined> => {
+    const createPreviewImage = (file: File): Promise<string> => {
         return new Promise(resolve => {
             const reader = new FileReader()
             reader.readAsDataURL(file)
