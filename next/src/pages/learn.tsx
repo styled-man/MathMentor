@@ -1,5 +1,5 @@
 import Image from "next/image"
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import Modal from "./components/Modal"
 import MessageContainer from "./components/MessageContainer"
 
@@ -26,21 +26,42 @@ function InteractivityArea() {
     const [inputText, setInputText] = useState("")
     const [isAllModalHidden, setIsAllModalHidden] = useState<boolean>(false)
 
+    const [conversations, setConversations] = useState<
+        Array<{
+            message: string
+            isSentByUser: boolean
+        }>
+    >([])
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputText(event.target.value)
     }
 
+    const scrollRef = useRef<HTMLDivElement>(null)
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         console.log(`User submitted: ${inputText}`)
+        if (inputText !== "") {
+            setConversations([
+                ...conversations,
+                { message: inputText, isSentByUser: true },
+            ])
+        }
         setInputText("")
         setIsAllModalHidden(true)
+        setTimeout(() => {
+            if (scrollRef.current) {
+                scrollRef.current.scrollIntoView({ behavior: "smooth" })
+                scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+            }
+        }, 0)
     }
 
     return (
         <>
             <div className="relative -top-[1.75rem] right-3 h-[89vh] w-[50vw]">
-                <MessageContainer />
+                <MessageContainer conversations={conversations} useRefHook={scrollRef} />
 
                 <Modal
                     userProblem={"Vector Mathematics"}
