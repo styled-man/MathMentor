@@ -35,7 +35,7 @@ load_dotenv()
 
 chat = ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"),
                   model_name='gpt-4',
-                  temperature=0.7)
+                  temperature=0.1)
 
 app = Flask(__name__)
 
@@ -59,9 +59,10 @@ def extract_data():
 @app.route("/solution", methods=['POST'])
 def solution():
     raw_json = request.get_json()
-    wolfram_output = execute_wolfram_query(raw_json["mathpix"])
+    print(raw_json["mathpix_question"])
+    wolfram_output = execute_wolfram_query(raw_json["mathpix_question"])
     mistake_output = find_mistake(chat,
-                                  data={"mathpix": raw_json["mathpix"], "wolfram": wolfram_output})
+                                  data={"mathpix": raw_json["mathpix_raw"], "wolfram": wolfram_output})
 
     return {
         "mistake": mistake_output["mistake"],

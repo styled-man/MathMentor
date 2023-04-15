@@ -8,4 +8,4 @@ RUN python3 -m venv .venv && \
 
 COPY . .
 
-CMD flask run --port=${BACKEND_PORT}
+CMD flask run --port=${BACKEND_PORT} --host=0.0.0.0

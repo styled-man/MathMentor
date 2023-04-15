@@ -13,7 +13,7 @@ def process_mathpix(chat, data: str) -> str:
         ResponseSchema(
             name="content", description="A formatted version of the mathpix data"),
         ResponseSchema(
-            name="question", description="A concise description of the question the mathpix data is answering"),
+            name="question", description="The most minimal form of the question, written so a calculator can solve it. If the question has multiple steps keep only the first one. Very important: do not include the solution, just the question to solve."),
     ]
 
     output_parser = StructuredOutputParser.from_response_schemas(
@@ -66,7 +66,7 @@ def find_mistake(chat, data: dict) -> str:
 
     human_message_prompt = HumanMessagePromptTemplate(prompt=PromptTemplate(
         input_variables=["mathpix", "wolfram"],
-        template="Here is the attempt from the student: {mathpix}\n\nHere is the correct answer: {wolfram}\n\nWhat step did the student make a mistake on?",
+        template="Here is the attempt from the student: {mathpix}\n\nHere is the correct answer: {wolfram}\n\nWhat is the specific step the user made a mistake on?",
     ))
 
     chat_prompt_template = ChatPromptTemplate.from_messages(
