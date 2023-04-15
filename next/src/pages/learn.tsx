@@ -1,7 +1,13 @@
 import Image from "next/image"
-import React, { useRef, useState } from "react"
+import React, { type ReactNode, useRef, useState } from "react"
 import Modal from "./components/Modal"
 import MessageContainer from "./components/MessageContainer"
+import Form from "./components/Form"
+//! Use this code for the api. the filter removes the loading message from the array
+//! setConversations([
+//!     ...conversations.filter(e => e.shouldBeFilteredOut != true),
+//!     { message: **BOTS MESSAGE**, isSentByUser: false },
+//! ])
 
 const Learn = () => {
     return (
@@ -28,14 +34,26 @@ function InteractivityArea() {
 
     const [conversations, setConversations] = useState<
         Array<{
-            message: string
+            message: ReactNode
             isSentByUser: boolean
+            shouldBeFilteredOut?: boolean
         }>
     >([])
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputText(event.target.value)
     }
+
+    const Filter = () => (
+        <div className="flex gap-3">
+            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white"></div>
+            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white delay-[250ms]"></div>
+            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white delay-500"></div>
+        </div>
+    )
+
+    console.log(`Hello please use this code to input message from the api:             
+`)
 
     const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -44,8 +62,9 @@ function InteractivityArea() {
         console.log(`User submitted: ${inputText}`)
         if (inputText !== "") {
             setConversations([
-                ...conversations,
+                ...conversations.filter(e => e.shouldBeFilteredOut != true),
                 { message: inputText, isSentByUser: true },
+                { message: <Filter />, isSentByUser: false, shouldBeFilteredOut: true },
             ])
         }
         setInputText("")
@@ -94,24 +113,12 @@ function InteractivityArea() {
                     setIsAllModalHidden={setIsAllModalHidden}
                 />
             </div>
-            <form
-                onSubmit={handleSubmit}
-                className="absolute bottom-3 right-12 flex w-[45vw] items-center  px-4 py-3"
-            >
-                <input
-                    type="text"
-                    placeholder="Type a message..."
-                    value={inputText}
-                    onChange={handleInputChange}
-                    className="mr-2 w-full resize-none rounded-md border border-gray-300 px-4 py-2"
-                />
-                <button
-                    type="submit"
-                    className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                >
-                    Send
-                </button>
-            </form>
+
+            <Form
+                handleSubmit={handleSubmit}
+                inputText={inputText}
+                handleInputChange={handleInputChange}
+            />
         </>
     )
 }

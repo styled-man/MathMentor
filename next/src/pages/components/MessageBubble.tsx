@@ -1,21 +1,21 @@
-import React from "react"
+import React, { Children, type ReactNode } from "react"
 
 interface IMessageBubble {
     isSentByUser: boolean
-    message: string
+    children: ReactNode
 }
 
-const MessageBubble = ({ isSentByUser, message }: IMessageBubble) => {
+const MessageBubble = ({ isSentByUser, children }: IMessageBubble) => {
     return (
         <div
             style={{
-                backgroundColor: isSentByUser ? "blue" : "grey",
+                backgroundColor: isSentByUser ? "blue" : "#6b6b6d",
                 marginLeft: isSentByUser ? "auto" : "1.25rem",
                 marginRight: isSentByUser ? "1.25rem" : "auto",
             }}
-            className="mb-1 w-fit  max-w-[90%]  break-all rounded-2xl p-5 text-white"
+            className="mb-1 w-fit  max-w-[90%]  break-all rounded-2xl p-5 text-white first:mt-[100%]"
         >
-            {message}
+            {children}
         </div>
     )
 }
