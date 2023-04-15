@@ -25,11 +25,16 @@ const FileUploadForm = () => {
     }
 
     return (
+        <>
+        <div className="">
+
+        </div>
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         <form onSubmit={handleSubmit}>
             <input ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png" />
             <button type="submit">Upload</button>
         </form>
+        </>
     )
 }
 
