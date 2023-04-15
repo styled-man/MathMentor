@@ -22,7 +22,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     const { width, height } = viewport.getCurrentViewport(camera, [0, 0, randZ])
 
     useFrame((state, dt) => {
-        ref.current.position.y -= 0.7055
+        ref.current.position.y -= 0.0055
 
         if (ref.current.position.y < -height - 15) {
             ref.current.position.y = Math.random() * 14 + 13
