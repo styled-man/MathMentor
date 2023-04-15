@@ -1,4 +1,3 @@
-from flask import Flask
 import asyncio
 from dotenv import dotenv_values
 from langchain.chat_models import ChatOpenAI
@@ -36,11 +35,26 @@ openai_api_key = api_keys['OPENAI_API_KEY']
 
 chat = ChatOpenAI(openai_api_key=openai_api_key,
                   model_name='gpt-4',
-                  temperature=0.7)
-
-app = Flask(__name__)
+                  temperature=1)
 
 
-@app.route("/", methods=['GET'])
-def index():
-    return "Hello World"
+def assemble_prompts():
+    test = find_mistake(chat, data={
+                        "mathpix": "3x + 2 = 0, 3x = -2, x = -3/2", "wolfram": "3x + 2 = 0, 3x = -2, x = -2/3"})
+    print(f"\n\nTEST: {test}")
+    #    mathpix_simplified = mathpix_2_simplified(chat, data=MATHPIX_DATA)
+    #    print(mathpix_simplified)
+    #    question = mathpix_2_question(chat, data=MATHPIX_DATA)
+    #    print(f"\n\nQUESTION: {question}")
+    #    wolfram = execute_wolfram_query(task=question)
+    #    print(f"\n\nWOLFRAM: {wolfram}")
+
+
+assemble_prompts()
+# from flask import Flask
+#
+# app = Flask(__name__)
+#
+# @app.route("/")
+# def hello_world():
+#    return "<p>Hello, World!</p>"
