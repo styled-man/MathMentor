@@ -13,7 +13,6 @@ interface IModal {
     isModalSmall: boolean
     ref: React.RefObject<HTMLDivElement>
     setIsModalSmall: React.Dispatch<React.SetStateAction<boolean>>
-    height: string
 }
 
 const Modal = ({
@@ -26,18 +25,16 @@ const Modal = ({
     setIsModalSmall,
     isModalSmall,
     ref,
-    height,
 }: IModal) => {
     return (
         <div
             ref={ref}
             style={{
                 top: isModalSmall ? yPosition : 0,
-                height: height,
                 maxHeight: "95%",
             }}
             className={`${isModalSmall ? "small-modal" : "large-modal"}
-ml-5 cursor-pointer rounded bg-white p-2 shadow-2xl duration-500`}
+ml-5 cursor-pointer rounded h-fit  bg-white p-2 shadow-2xl duration-500`}
             onClick={() => {
                 setIsModalSmall(!isModalSmall)
             }}
@@ -70,17 +67,7 @@ interface IModalContainer {
 }
 
 const ModalContainer = (props: IModalContainer) => {
-    const [height, setHeight] = useState<string>("auto")
     const ref = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        const element = ref.current
-        if (element) {
-            if (element.scrollHeight > element.clientHeight) {
-                setHeight(`${element.scrollHeight} px`)
-            }
-        }
-    }, [])
 
     const [isModalSmall, setIsModalSmall] = useState<boolean>(true)
     const [isModalHidden, setIsModalHidden] = useState<boolean>(false)
@@ -110,7 +97,6 @@ const ModalContainer = (props: IModalContainer) => {
                 <Modal
                     {...props}
                     ref={ref}
-                    height={height}
                     isModalSmall={isModalSmall}
                     setIsModalSmall={setIsModalSmall}
                 />
