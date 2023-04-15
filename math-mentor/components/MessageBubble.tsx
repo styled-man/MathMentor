@@ -15,11 +15,7 @@ const MessageBubble = ({ isSentByUser, children, isMessageFiller = false }: IMes
             }}
             className="mx-5 mb-1 w-fit  max-w-[90%] break-all rounded-2xl p-5 text-white first:mt-[100%]"
         >
-            {isMessageFiller || isSentByUser ? (
-                children
-            ) : (
-                <ReactMarkdown>{children as string}</ReactMarkdown>
-            )}
+            {children}
         </div>
     )
 }
