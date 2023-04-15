@@ -1,9 +1,10 @@
 from flask import Flask
-from dotenv import dotenv_values
 from langchain.chat_models import ChatOpenAI
+from dotenv import load_dotenv
 from utilities.langchain_helpers import process_mathpix, find_mistake
 from utilities.wolfram_helpers import execute_wolfram_query
 from flask import request
+import os
 
 MATHPIX_DATA = """\\[\n\\begin{array}{l}\n\\text { Question: Find } \\omega_{x} \\text {, where } \\\\\n\\begin{array}{ll}\n\\omega=20 \\mathrm{~N} & \\text { along the force } \\\\\n\\theta=30^{\\circ} & \\text { plane. }\n\\end{array} \\\\\n\\begin{array}{ll}\n\\omega_{x} & =\\omega \\sin \\theta \\\\\n& =20 \\mathrm{~N} \\cdot \\sin \\left(30^{\\circ}\\right) \\\\\n& =10 \\mathrm{~N}\n\\end{array}\n\\end{array}\n\\]\nAnswer: The \\( \\omega_{x} \\) is \\( 10 \\mathrm{~N} \\). This was fund by multiplying \\( \\omega \\) by \\( \\sin \\left(30^{\\circ}\\right) \\).",
     "data": [
@@ -30,10 +31,10 @@ MATHPIX_DATA = """\\[\n\\begin{array}{l}\n\\text { Question: Find } \\omega_{x} 
     ]"""
 WOLFRAM_DATA = "solve 3x^2 = 9"
 
-api_keys = dotenv_values()
-openai_api_key = api_keys['OPENAI_API_KEY']
+load_dotenv()
+# openai_api_key = api_keys['OPENAI_API_KEY']
 
-chat = ChatOpenAI(openai_api_key=openai_api_key,
+chat = ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"),
                   model_name='gpt-4',
                   temperature=0.7)
 
