@@ -1,5 +1,5 @@
-import React, { type ReactNode } from "react"
-import ReactMarkdown from "react-markdown"
+import React, { Children, type ReactNode } from "react"
+
 interface IMessageBubble {
     isSentByUser: boolean
     children: ReactNode

@@ -4,9 +4,9 @@
 
 
 .small-modal{
-    @apply w-[65%] h-fit z-10 absolute;
+    @apply w-[65%] z-10 absolute;
 }
 
 .large-modal{
-    @apply my-[1%] h-[95%] w-[90%] mx-[5%] z-20 absolute;
+    @apply my-[1%] w-[90%] mx-[5%] z-20 absolute;
 }
