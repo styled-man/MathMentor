@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 URL = "http://api.wolframalpha.com/v2/query"
-# os.environ["WOLFRAM_ALPHA_APPID"] = os.getenv("WOLFRAM_ALPHA_APPID")
 
 
 def execute_wolfram_query(task: str) -> str:
@@ -18,7 +17,7 @@ def execute_wolfram_query(task: str) -> str:
     }
 
     response = requests.get(URL, params=params)
-    print(response)
+    # print(response)
     response.raise_for_status()  # throw an error if the request fails
     res = ""
 

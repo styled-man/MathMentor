@@ -1,6 +1,6 @@
+from dotenv import load_dotenv
 from flask import Flask
 from langchain.chat_models import ChatOpenAI
-from dotenv import load_dotenv
 from utilities.langchain_helpers import process_mathpix, find_mistake
 from utilities.wolfram_helpers import execute_wolfram_query
 from flask import request
@@ -32,7 +32,6 @@ MATHPIX_DATA = """\\[\n\\begin{array}{l}\n\\text { Question: Find } \\omega_{x} 
 WOLFRAM_DATA = "solve 3x^2 = 9"
 
 load_dotenv()
-# openai_api_key = api_keys['OPENAI_API_KEY']
 
 chat = ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"),
                   model_name='gpt-4',
