@@ -1,7 +1,6 @@
 from dotenv import load_dotenv
 from flask import Flask
 from langchain.chat_models import ChatOpenAI
-from dotenv import load_dotenv
 from utilities.langchain_helpers import process_mathpix, find_mistake
 from utilities.wolfram_helpers import execute_wolfram_query
 from flask import request
