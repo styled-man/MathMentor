@@ -83,6 +83,7 @@ const ModalContainer = (props: IModalContainer) => {
                     setIsModalHidden(!isModalHidden)
                     props.setIsAllModalHidden(false)
                 }}
+                // onDrag={() => {setIsModalSmall(true)}}
             >
                 <HiOutlineInformationCircle size={20} />
             </div>

@@ -21,8 +21,6 @@ const Learn = () => {
     )
 }
 
-// [&>*:nth-child(2)]:relative [&>*:nth-child(2)]:top-[26.5rem]
-
 function InteractivityArea() {
     const [inputText, setInputText] = useState("")
     const [isAllModalHidden, setIsAllModalHidden] = useState<boolean>(false)
@@ -40,7 +38,7 @@ function InteractivityArea() {
 
     return (
         <>
-            <div className="relative -top-[1.75rem] right-3 h-[90vh] w-[50vw] border-2 border-red-500">
+            <div className="relative -top-[1.75rem] right-3 h-[89vh] w-[50vw]">
                 <Modal
                     userProblem={"Vector Mathematics"}
                     infoForUser="Information"
