@@ -36,7 +36,7 @@ function InteractivityArea() {
         Array<{
             message: ReactNode
             isSentByUser: boolean
-            shouldBeFilteredOut?: boolean
+            isMessageFiller?: boolean
         }>
     >([])
 
@@ -44,7 +44,7 @@ function InteractivityArea() {
         setInputText(event.target.value)
     }
 
-    const Filter = () => (
+    const MessageLoading = () => (
         <div className="flex gap-3">
             <div className="dot h-2 w-2 animate-pulse rounded-full bg-white"></div>
             <div className="dot h-2 w-2 animate-pulse rounded-full bg-white delay-[250ms]"></div>
@@ -62,9 +62,9 @@ function InteractivityArea() {
         console.log(`User submitted: ${inputText}`)
         if (inputText !== "") {
             setConversations([
-                ...conversations.filter(e => e.shouldBeFilteredOut != true),
+                ...conversations.filter(e => e.isMessageFiller != true),
                 { message: inputText, isSentByUser: true },
-                { message: <Filter />, isSentByUser: false, shouldBeFilteredOut: true },
+                { message: <MessageLoading />, isSentByUser: false, isMessageFiller: true },
             ])
         }
         setInputText("")
