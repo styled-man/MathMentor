@@ -2,6 +2,7 @@ import * as THREE from "three"
 import React, { useRef } from "react"
 import { useGLTF } from "@react-three/drei"
 import { GLTF } from "three-stdlib"
+import { useFrame, useThree } from "react-three-fiber"
 
 type GLTFResult = GLTF & {
     nodes: {
@@ -14,16 +15,31 @@ type GLTFResult = GLTF & {
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
     const { nodes, materials } = useGLTF("/pom.glb") as GLTFResult
+    const ref = useRef<THREE.Mesh>(null!)
+    // useThree
+    const { viewport, camera } = useThree()
+    const randZ = Math.random() * 2
+    const { width, height } = viewport.getCurrentViewport(camera, [0, 0, randZ])
+
+    useFrame((state, dt) => {
+        ref.current.position.y -= 0.0055
+
+        if (ref.current.position.y < -height - 9) {
+            ref.current.position.y = Math.random() * 13 + 11
+            ref.current.position.x = Math.random() * width - width / 2
+        }
+    })
     return (
         <group {...props} dispose={null}>
             <mesh
-            scale={2}
+                scale={2}
+                ref={ref}
                 castShadow
                 receiveShadow
                 geometry={nodes.Text.geometry}
                 material={materials["Material.002"]}
-                position={[4.52, 1.45, -3.82]}
-                rotation={[Math.PI / 2, 0, 0]}
+                position={[10, 31.45, -2.82]}
+                rotation={[Math.PI / 2, -0.2, 0.4]}
             />
         </group>
     )

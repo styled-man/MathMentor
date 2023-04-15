@@ -14,7 +14,7 @@ type GLTFResult = GLTF & {
 }
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
-    const { nodes, materials } = useGLTF("/asquared.glb") as GLTFResult
+    const { nodes, materials } = useGLTF("/plus.glb") as GLTFResult
     const ref = useRef<THREE.Mesh>(null!)
     // useThree
     const { viewport, camera } = useThree()
@@ -22,28 +22,27 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     const { width, height } = viewport.getCurrentViewport(camera, [0, 0, randZ])
 
     useFrame((state, dt) => {
-        ref.current.position.y -= 0.0075
+        ref.current.position.y -= 0.7055
 
-        if (ref.current.position.y < -height - 9) {
-            ref.current.position.y = Math.random() * 11 + 8
+        if (ref.current.position.y < -height - 15) {
+            ref.current.position.y = Math.random() * 14 + 13
             ref.current.position.x = Math.random() * width - width / 2
         }
     })
-
     return (
         <group {...props} dispose={null}>
             <mesh
-                scale={2}
                 ref={ref}
+                scale={1.4}
                 castShadow
                 receiveShadow
                 geometry={nodes.Text.geometry}
                 material={materials["Material.002"]}
-                position={[0, 9, 0]}
-                rotation={[Math.PI / 2, 1, 0]}
+                position={[4.52, 21.45, -1.82]}
+                rotation={[Math.PI / 2, 0, 0]}
             />
         </group>
     )
 }
 
-useGLTF.preload("/asquared.glb")
+useGLTF.preload("/plus.glb")
