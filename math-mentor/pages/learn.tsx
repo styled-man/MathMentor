@@ -1,9 +1,9 @@
 import Image from "next/image"
-import React, { type ReactNode, useRef, useState } from "react"
+import React, { type ReactNode, useRef, useState, useEffect } from "react"
 // import Modal from "@/components/Modal"
 import MessageContainer from "@/components/MessageContainer"
 import Form from "@/components/Form"
-// import { type IModalData } from "@/components/ModalData"
+import { useRouter } from "next/router"
 
 //! Use this code for the api. the filter removes the loading message from the array
 //! setConversations([
@@ -12,10 +12,13 @@ import Form from "@/components/Form"
 //! ])
 
 const Learn = () => {
+    const router = useRouter()
+    const { fileUrl } = router.query
+    console.log(fileUrl)
     return (
         <div className="absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center bg-slate-100">
             <div className="relative m-3 ml-4 h-[95vh] w-[50vw] overflow-hidden rounded-md">
-                <Image src={"https://images.freeimages.com/images/previews/54c/random-photography-3-1143357.jpg"} alt="sheesh" fill={true} />
+                <Image src={`https://math-mentor.s3.amazonaws.com/${fileUrl}`} alt="Image of fileUrl" fill={true} />
             </div>
             <div>
                 <InteractivityArea />
@@ -50,34 +53,12 @@ function InteractivityArea() {
 
     const scrollRef = useRef<HTMLDivElement>(null)
 
-    // const [modalData, setModalData] = useState<IModalData[]>([
-    //     {
-    //         userProblem: "Vector Mathematics",
-    //         infoForUser: "Information",
-    //         yPosition: 100,
-    //         youtubeLink: "https://www.youtube.com/",
-    //         youtubeLinkTitle: "Math me like I'm 5",
-    //         moreInfoForUser: "more information",
-    //     },
-    //     {
-    //         userProblem: "Vector Mathematics",
-    //         infoForUser:
-    //             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.",
-    //         yPosition: 200,
-    //         youtubeLink: "https://www.youtube.com/",
-    //         youtubeLinkTitle: "Math me like I'm 5",
-    //         moreInfoForUser:
-    //             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem",
-    //     },
-    //     {
-    //         userProblem: "Vector Mathematics",
-    //         infoForUser: "Information1",
-    //         yPosition: 300,
-    //         youtubeLink: "https://www.youtube.com/",
-    //         youtubeLinkTitle: "Math me like I'm 5",
-    //         moreInfoForUser: "more information",
-    //     },
-    // ])
+    useEffect(() => {
+        setConversations([
+            { message: "**BOTS MESSAGE**", isSentByUser: false },
+            { message: <Filter />, isSentByUser: false },
+        ])
+    }, [])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -90,7 +71,6 @@ function InteractivityArea() {
             ])
         }
         setInputText("")
-        // setIsAllModalHidden(true)
         setTimeout(() => {
             if (scrollRef.current) {
                 scrollRef.current.scrollIntoView({ behavior: "smooth" })
@@ -103,22 +83,9 @@ function InteractivityArea() {
         <>
             <div className="relative -top-[1.75rem] right-3 h-[89vh] w-[50vw]">
                 <MessageContainer conversations={conversations} useRefHook={scrollRef} />
-
-                {/* {modalData.map(e => (
-                    <Modal
-                        key={e.infoForUser}
-                        userProblem={e.userProblem}
-                        infoForUser={e.infoForUser}
-                        yPosition={e.yPosition}
-                        youtubeLink={e.youtubeLink}
-                        youtubeLinkTitle={e.youtubeLinkTitle}
-                        moreInfoForUser={e.moreInfoForUser}
-                        isAllModalHidden={isAllModalHidden}
-                    />
-                ))} */}
             </div>
 
-            {/* <Form handleSubmit={handleSubmit} inputText={inputText} handleInputChange={handleInputChange} /> */}
+            <Form handleSubmit={handleSubmit} inputText={inputText} handleInputChange={handleInputChange} />
         </>
     )
 }
