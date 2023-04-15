@@ -33,7 +33,18 @@ const FileUploadForm = ({ className }: Props) => {
     return (
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         <form onSubmit={handleSubmit} className={className}>
-            <input className="text-black relative left-2" ref={fileInputRef} type="file" accept=".jpg,.jpeg,.png" />
+            <label className="block text-lg font-medium text-gray-700 mb-2 left-2 relative">Select file</label>
+            <div className="flex items-center">
+                <input
+                    className="appearance-none bg-white rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none relative -left-2 focus:shadow-outline"
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                />
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4" type="submit">
+                    Upload
+                </button>
+            </div>
         </form>
     )
 }
