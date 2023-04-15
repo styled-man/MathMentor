@@ -1,5 +1,4 @@
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
-# from langchain.chains import SimpleSequentialChain
 from langchain.prompts import PromptTemplate
 from langchain.prompts.chat import (
     SystemMessagePromptTemplate,
@@ -9,10 +8,22 @@ from langchain.prompts.chat import (
 from langchain.chains import LLMChain
 
 
-def mathpix_2_simplified(chat, data: str) -> str:
+def process_mathpix(chat, data: str) -> str:
+    response_schemas = [
+        ResponseSchema(
+            name="content", description="A formatted version of the mathpix data"),
+        ResponseSchema(
+            name="question", description="A concise description of the question the mathpix data is answering"),
+    ]
+
+    output_parser = StructuredOutputParser.from_response_schemas(
+        response_schemas)
+    format_instructions = output_parser.get_format_instructions()
+
     human_message_prompt = HumanMessagePromptTemplate(prompt=PromptTemplate(
         input_variables=["mathpix_data"],
-        template="Parse the following LaTex/Json data in a more human-readable format: {mathpix_data}?",
+        template="{format_instructions}\nParse the following LaTex/Json data in a more human-readable format, and provide the original question: {mathpix_data}?",
+        partial_variables={"format_instructions": format_instructions}
     ))
 
     chat_prompt_template = ChatPromptTemplate.from_messages(
@@ -20,21 +31,21 @@ def mathpix_2_simplified(chat, data: str) -> str:
     chain = LLMChain(llm=chat, prompt=chat_prompt_template)
 
     out = chain.run(data)
-    return out
+    return output_parser.parse(out)
 
 
-def mathpix_2_question(chat, data: str) -> str:
-    human_message_prompt = HumanMessagePromptTemplate(prompt=PromptTemplate(
-        input_variables=["mathpix"],
-        template="{mathpix}\n Write the question this work is answering as concisely as possible, including the original values",
-    ))
-
-    chat_prompt_template = ChatPromptTemplate.from_messages(
-        [human_message_prompt])
-    chain = LLMChain(llm=chat, prompt=chat_prompt_template)
-
-    out = chain.run(data)
-    return out
+# def mathpix_2_question(chat, data: str) -> str:
+#    human_message_prompt = HumanMessagePromptTemplate(prompt=PromptTemplate(
+#        input_variables=["mathpix"],
+#        template="{mathpix}\n Write the question this work is answering as concisely as possible, including the original values",
+#    ))
+#
+#    chat_prompt_template = ChatPromptTemplate.from_messages(
+#        [human_message_prompt])
+#    chain = LLMChain(llm=chat, prompt=chat_prompt_template)
+#
+#    out = chain.run(data)
+#    return out
 
 
 def find_mistake(chat, data: dict) -> str:
