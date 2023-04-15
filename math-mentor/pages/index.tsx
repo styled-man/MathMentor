@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     return (
         <div>
             <Scene />
-            <DragAndDrop items={item} />
+            <DragAndDrop />
         </div>
     )
 }
