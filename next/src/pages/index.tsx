@@ -1,6 +1,7 @@
 import { type NextPage } from "next"
 import DragAndDrop from "./components/DragAndDrop"
 import Scene from "./components/Scene"
+import React from "react"
 
 const Home: NextPage = () => {
     const item = [
