@@ -75,7 +75,7 @@ const ModalContainer = (props: IModalContainer) => {
     return (
         <>
             <div
-                className="absolute left-[-40px] rounded-full bg-white"
+                className="absolute left-[-40px] rounded-full bg-white cursor-pointer"
                 style={{
                     top: props.yPosition,
                 }}
@@ -83,7 +83,6 @@ const ModalContainer = (props: IModalContainer) => {
                     setIsModalHidden(!isModalHidden)
                     props.setIsAllModalHidden(false)
                 }}
-                // onDrag={() => {setIsModalSmall(true)}}
             >
                 <HiOutlineInformationCircle size={20} />
             </div>
