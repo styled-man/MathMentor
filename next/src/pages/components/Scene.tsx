@@ -4,10 +4,16 @@ import { Canvas } from "react-three-fiber"
 import Floor from "./Floor"
 import { Debug, Physics, RigidBody } from "@react-three/rapier"
 import { SoftShadows } from "@react-three/drei"
-import PIModel from './Threepointonefour'
-import AE from './EEqualsMCSquared'
-import AX from './AX'
-import PI from './PI'
+import Slope from './Slope'
+import EE from './EEqualsMCSquared'
+import THR from './Threepointonefour'
+import Infinity from './Infinity'
+import POM from './POM'
+import D from './Division'
+import AX from "./AX"
+import AS from "./AS"
+
+import { DepthOfField, EffectComposer } from "@react-three/postprocessing"
 
 const Scene = () => {
     return (
@@ -17,34 +23,26 @@ const Scene = () => {
             camera={{ position: [0, 5, 10], fov: 75 }}
             shadows
         >
+            {/* <fog attach="fog" args={["white", 0, 20]} /> */}
             <SoftShadows focus={0.1} samples={5} size={8} />
             <ambientLight intensity={0.75} />
-            <directionalLight castShadow position={[10, 10, 10]} intensity={3} rotation={[0, 4, 1]} />
-            <Physics>
-            {/* <Debug /> */}
-                <RigidBody position={[0,1,0]}>
-                    <PIModel />
-                </RigidBody>
-                <RigidBody position={[8,4,2]} rotation={[1.12, 1.2, 1.001]}>
-                    <PIModel />
-                </RigidBody>
-                <RigidBody position={[1,4,10]} rotation={[4.62, 1.8, 2.001]}>
-                    <AE />
-                </RigidBody>
-                <RigidBody position={[4,6,8]} rotation={[4.62, 1.8, 2.001]}>
+            <directionalLight
+                castShadow
+                position={[10, 10, 10]}
+                intensity={3}
+                rotation={[0, 4, 1]}
+            />
+                    <THR />
+                    <Slope rotation={[Math.PI / 2, 0, 0]} />
+                    <EE />
+                    <Infinity rotation={[-Math.PI / 2, 0, 0]} />
+                    <POM />
+                    <D />
                     <AX />
-                </RigidBody>
-                <RigidBody position={[2,3,-2]} rotation={[4.62, 1.8, 2.001]}>
-                    <PI />
-                </RigidBody>
-                <RigidBody position={[-4,6,4]} rotation={[4.62, 1.8, 2.001]}>
-                    <PI />
-
-                </RigidBody>
-                <RigidBody friction={0.8} restitution={1} type="fixed">
-                    <Floor />
-                </RigidBody>
-            </Physics>
+                    <AS />
+            {/* <EffectComposer multisampling={0}>
+                <DepthOfField target={[0, 0, 60]} focalLength={0.4} bokehScale={14} height={700} />
+            </EffectComposer> */}
             {/* <OrbitControls /> */}
         </Canvas>
     )
