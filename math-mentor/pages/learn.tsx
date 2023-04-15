@@ -118,7 +118,7 @@ function InteractivityArea() {
                 ))} */}
             </div>
 
-            <Form handleSubmit={handleSubmit} inputText={inputText} handleInputChange={handleInputChange} />
+            {/* <Form handleSubmit={handleSubmit} inputText={inputText} handleInputChange={handleInputChange} /> */}
         </>
     )
 }
