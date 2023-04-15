@@ -1,10 +1,9 @@
 from flask import Flask
-import asyncio
 from dotenv import dotenv_values
 from langchain.chat_models import ChatOpenAI
-from utilities.langchain_helpers import mathpix_2_question, mathpix_2_simplified, find_mistake
+from utilities.langchain_helpers import process_mathpix, find_mistake
 from utilities.wolfram_helpers import execute_wolfram_query
-
+from flask import request
 
 MATHPIX_DATA = """\\[\n\\begin{array}{l}\n\\text { Question: Find } \\omega_{x} \\text {, where } \\\\\n\\begin{array}{ll}\n\\omega=20 \\mathrm{~N} & \\text { along the force } \\\\\n\\theta=30^{\\circ} & \\text { plane. }\n\\end{array} \\\\\n\\begin{array}{ll}\n\\omega_{x} & =\\omega \\sin \\theta \\\\\n& =20 \\mathrm{~N} \\cdot \\sin \\left(30^{\\circ}\\right) \\\\\n& =10 \\mathrm{~N}\n\\end{array}\n\\end{array}\n\\]\nAnswer: The \\( \\omega_{x} \\) is \\( 10 \\mathrm{~N} \\). This was fund by multiplying \\( \\omega \\) by \\( \\sin \\left(30^{\\circ}\\right) \\).",
     "data": [
@@ -44,3 +43,27 @@ app = Flask(__name__)
 @app.route("/", methods=['GET'])
 def index():
     return "Hello World"
+
+
+@app.route("/extract_data", methods=['POST'])
+def extract_data():
+    raw_json = request.get_json()
+    mathpix_output = process_mathpix(chat, data=raw_json["mathpix_data"])
+
+    return {
+        "content": mathpix_output["content"],
+        "question": mathpix_output["question"],
+    }
+
+
+@app.route("/solution", methods=['POST'])
+def solution():
+    raw_json = request.get_json()
+    wolfram_output = execute_wolfram_query(raw_json["mathpix"])
+    mistake_output = find_mistake(chat,
+                                  data={"mathpix": raw_json["mathpix"], "wolfram": wolfram_output})
+
+    return {
+        "mistake": mistake_output["mistake"],
+        "topic": mistake_output["topic"],
+    }
