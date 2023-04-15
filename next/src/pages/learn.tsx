@@ -52,10 +52,38 @@ function InteractivityArea() {
         </div>
     )
 
-    console.log(`Hello please use this code to input message from the api:             
-`)
-
     const scrollRef = useRef<HTMLDivElement>(null)
+
+    const [modalData, setModalData] = useState([
+        {
+            userProblem: "Vector Mathematics",
+            infoForUser: "Information",
+            yPosition: 100,
+            youtubeLink: "https://www.youtube.com/",
+            youtubeLinkTitle: "Math me like I'm 5",
+            moreInfoForUser: "more information",
+        },
+        {
+            userProblem: "Vector Mathematics",
+            infoForUser:
+                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.",
+            yPosition: 200,
+            youtubeLink: "https://www.youtube.com/",
+            youtubeLinkTitle: "Math me like I'm 5",
+            moreInfoForUser:
+                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem",
+        },
+        {
+            userProblem: "Vector Mathematics",
+            infoForUser: "Information1",
+            yPosition: 300,
+            youtubeLink: "https://www.youtube.com/",
+            youtubeLinkTitle: "Math me like I'm 5",
+            moreInfoForUser: "more information",
+        },
+    ])
+
+    const [selectedModal, setSelectedModal] = useState(null)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -82,37 +110,19 @@ function InteractivityArea() {
             <div className="relative -top-[1.75rem] right-3 h-[89vh] w-[50vw]">
                 <MessageContainer conversations={conversations} useRefHook={scrollRef} />
 
-                <Modal
-                    userProblem={"Vector Mathematics"}
-                    infoForUser="Information"
-                    yPosition={100}
-                    youtubeLink="https://www.youtube.com/"
-                    youtubeLinkTitle="Math me like I'm 5"
-                    moreInfoForUser="more information"
-                    isAllModalHidden={isAllModalHidden}
-                    setIsAllModalHidden={setIsAllModalHidden}
-                />
-                
-                <Modal
-                    userProblem={"Vector Mathematics"}
-                    infoForUser="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam."
-                    yPosition={200}
-                    youtubeLink="https://www.youtube.com/"
-                    youtubeLinkTitle="Math me like I'm 5"
-                    moreInfoForUser="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem"
-                    isAllModalHidden={isAllModalHidden}
-                    setIsAllModalHidden={setIsAllModalHidden}
-                />
-                <Modal
-                    userProblem={"Vector Mathematics"}
-                    infoForUser="Information"
-                    yPosition={300}
-                    youtubeLink="https://www.youtube.com/"
-                    youtubeLinkTitle="Math me like I'm 5"
-                    moreInfoForUser="more information"
-                    isAllModalHidden={isAllModalHidden}
-                    setIsAllModalHidden={setIsAllModalHidden}
-                />
+                {modalData.map(e => (
+                    <Modal
+                        key={e.infoForUser}
+                        userProblem={e.userProblem}
+                        infoForUser={e.infoForUser}
+                        yPosition={e.yPosition}
+                        youtubeLink={e.youtubeLink}
+                        youtubeLinkTitle={e.youtubeLinkTitle}
+                        moreInfoForUser={e.moreInfoForUser}
+                        isAllModalHidden={isAllModalHidden}
+                        setIsAllModalHidden={setIsAllModalHidden}
+                    />
+                ))}
             </div>
 
             <Form

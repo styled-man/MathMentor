@@ -11,7 +11,7 @@ interface IModal {
     youtubeLinkTitle?: string
     moreInfoForUser?: string
     isModalSmall: boolean
-    ref: React.RefObject<HTMLDivElement>
+    modalRef: React.RefObject<HTMLDivElement>
     setIsModalSmall: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -24,11 +24,11 @@ const Modal = ({
     youtubeLinkTitle,
     setIsModalSmall,
     isModalSmall,
-    ref,
+    modalRef,
 }: IModal) => {
     return (
         <div
-            ref={ref}
+            ref={modalRef}
             style={{
                 top: isModalSmall ? yPosition : 0,
                 maxHeight: "95%",
@@ -46,10 +46,19 @@ ml-5 h-fit cursor-pointer rounded border-4 border-double border-gray-500 bg-whit
                 <br />
                 {moreInfoForUser}
                 <br />
-                Here is a video that might help out:{" "}
-                <Link href={youtubeLink || ""} target="_blank" className="text-blue-800 underline">
-                    {youtubeLinkTitle || youtubeLink}
-                </Link>
+
+                {youtubeLink && (
+                    <>
+                        Here is a video that might help out:{" "}
+                        <Link
+                            href={youtubeLink || ""}
+                            target="_blank"
+                            className="text-blue-800 underline"
+                        >
+                            {youtubeLinkTitle || youtubeLink}
+                        </Link>
+                    </>
+                )}
             </span>
         </div>
     )
@@ -67,7 +76,7 @@ interface IModalContainer {
 }
 
 const ModalContainer = (props: IModalContainer) => {
-    const ref = useRef<HTMLDivElement>(null)
+    const modalRef = useRef<HTMLDivElement>(null)
 
     const [isModalSmall, setIsModalSmall] = useState<boolean>(true)
     const [isModalHidden, setIsModalHidden] = useState<boolean>(false)
@@ -96,7 +105,7 @@ const ModalContainer = (props: IModalContainer) => {
             {isModalHidden || (
                 <Modal
                     {...props}
-                    ref={ref}
+                    modalRef={modalRef}
                     isModalSmall={isModalSmall}
                     setIsModalSmall={setIsModalSmall}
                 />
