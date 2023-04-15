@@ -34,7 +34,7 @@ const Modal = ({
                 maxHeight: "95%",
             }}
             className={`${isModalSmall ? "small-modal" : "large-modal"}
-ml-5 cursor-pointer rounded h-fit  bg-white p-2 shadow-2xl duration-500`}
+ml-5 h-fit cursor-pointer rounded border-4 border-double border-gray-500 bg-white p-2 shadow-2xl duration-500`}
             onClick={() => {
                 setIsModalSmall(!isModalSmall)
             }}
