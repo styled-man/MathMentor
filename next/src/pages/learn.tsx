@@ -3,6 +3,8 @@ import React, { type ReactNode, useRef, useState } from "react"
 import Modal from "./components/Modal"
 import MessageContainer from "./components/MessageContainer"
 import Form from "./components/Form"
+import { type IModalData } from "./components/ModalData"
+
 //! Use this code for the api. the filter removes the loading message from the array
 //! setConversations([
 //!     ...conversations.filter(e => e.shouldBeFilteredOut != true),
@@ -54,7 +56,7 @@ function InteractivityArea() {
 
     const scrollRef = useRef<HTMLDivElement>(null)
 
-    const [modalData, setModalData] = useState([
+    const [modalData, setModalData] = useState<IModalData[]>([
         {
             userProblem: "Vector Mathematics",
             infoForUser: "Information",
@@ -82,8 +84,6 @@ function InteractivityArea() {
             moreInfoForUser: "more information",
         },
     ])
-
-    const [selectedModal, setSelectedModal] = useState(null)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -120,7 +120,6 @@ function InteractivityArea() {
                         youtubeLinkTitle={e.youtubeLinkTitle}
                         moreInfoForUser={e.moreInfoForUser}
                         isAllModalHidden={isAllModalHidden}
-                        setIsAllModalHidden={setIsAllModalHidden}
                     />
                 ))}
             </div>

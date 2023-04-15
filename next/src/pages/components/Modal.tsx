@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { HiOutlineInformationCircle } from "react-icons/hi"
+import { type IModalData } from "./ModalData"
 
 interface IModal {
     yPosition: number
@@ -72,7 +73,6 @@ interface IModalContainer {
     youtubeLinkTitle?: string
     moreInfoForUser?: string
     isAllModalHidden: boolean
-    setIsAllModalHidden: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ModalContainer = (props: IModalContainer) => {
@@ -96,7 +96,6 @@ const ModalContainer = (props: IModalContainer) => {
                 }}
                 onClick={() => {
                     setIsModalHidden(!isModalHidden)
-                    props.setIsAllModalHidden(false)
                 }}
             >
                 <HiOutlineInformationCircle size={20} />
