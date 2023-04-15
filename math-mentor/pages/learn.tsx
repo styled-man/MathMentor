@@ -85,7 +85,9 @@ function InteractivityArea() {
                 <MessageContainer conversations={conversations} useRefHook={scrollRef} />
             </div>
 
-            <Form handleSubmit={handleSubmit} inputText={inputText} handleInputChange={handleInputChange} />
+            <Form handleSubmit={e=>{
+                e.preventDefault()
+            }} inputText={inputText} handleInputChange={handleInputChange} />
         </>
     )
 }
