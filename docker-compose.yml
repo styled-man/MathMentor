@@ -1,26 +1,26 @@
 version: "3.8"
 
 services:
-  backend:
-    container_name: backend
-    build:
-      context: ai_backend
-    ports:
-      - ${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}
-    volumes:
-      - ./backend:/backend
-    env_file:
-      - .env
+  #  backend:
+  #    container_name: backend
+  #    build:
+  #      context: ai_backend
+  #    ports:
+  #      - ${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}
+  #    volumes:
+  #      - ./backend:/backend
+  #    env_file:
+  #      - .env
 
   next:
-    container_name: next
+    container_name: math-mentor
     build:
-      context: next
+      context: math-mentor
       target: development
     ports:
       - ${NEXT_PORT:-3000}:${NEXT_PORT:-3000}
     volumes:
-      - ./next:/next
-      - /next/node_modules
+      - ./math-mentor:/math-mentor
+      - /math-mentor/node_modules
     env_file:
       - .env
