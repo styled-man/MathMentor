@@ -1,5 +1,4 @@
 import React from "react"
-import MessageBubble from "./MessageBubble"
 
 interface IForm {
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
@@ -10,7 +9,6 @@ interface IForm {
 const Form = ({ handleSubmit, inputText, handleInputChange }: IForm) => {
     return (
         <>
-            <MessageBubble isSentByUser={false}>Hi</MessageBubble>
             <form
                 onSubmit={handleSubmit}
                 className="absolute bottom-3 right-12 flex w-[45vw] items-center  px-4 py-3"
