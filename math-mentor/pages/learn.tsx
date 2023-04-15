@@ -1,8 +1,10 @@
 import Image from "next/image"
 import React, { type ReactNode, useRef, useState } from "react"
-import Modal from "@/components/Modal"
+// import Modal from "@/components/Modal"
 import MessageContainer from "@/components/MessageContainer"
 import Form from "@/components/Form"
+// import { type IModalData } from "@/components/ModalData"
+
 //! Use this code for the api. the filter removes the loading message from the array
 //! setConversations([
 //!     ...conversations.filter(e => e.shouldBeFilteredOut != true),
@@ -24,7 +26,15 @@ const Learn = () => {
 
 function InteractivityArea() {
     const [inputText, setInputText] = useState("")
-    const [isAllModalHidden, setIsAllModalHidden] = useState<boolean>(false)
+    // const [isAllModalHidden, setIsAllModalHidden] = useState<boolean>(false)
+
+    const Filter = () => (
+        <div className="flex gap-3">
+            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white"></div>
+            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white delay-[250ms]"></div>
+            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white delay-500"></div>
+        </div>
+    )
 
     const [conversations, setConversations] = useState<
         Array<{
@@ -38,15 +48,36 @@ function InteractivityArea() {
         setInputText(event.target.value)
     }
 
-    const Filter = () => (
-        <div className="flex gap-3">
-            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white"></div>
-            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white delay-[250ms]"></div>
-            <div className="dot h-2 w-2 animate-pulse rounded-full bg-white delay-500"></div>
-        </div>
-    )
-
     const scrollRef = useRef<HTMLDivElement>(null)
+
+    // const [modalData, setModalData] = useState<IModalData[]>([
+    //     {
+    //         userProblem: "Vector Mathematics",
+    //         infoForUser: "Information",
+    //         yPosition: 100,
+    //         youtubeLink: "https://www.youtube.com/",
+    //         youtubeLinkTitle: "Math me like I'm 5",
+    //         moreInfoForUser: "more information",
+    //     },
+    //     {
+    //         userProblem: "Vector Mathematics",
+    //         infoForUser:
+    //             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.",
+    //         yPosition: 200,
+    //         youtubeLink: "https://www.youtube.com/",
+    //         youtubeLinkTitle: "Math me like I'm 5",
+    //         moreInfoForUser:
+    //             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem",
+    //     },
+    //     {
+    //         userProblem: "Vector Mathematics",
+    //         infoForUser: "Information1",
+    //         yPosition: 300,
+    //         youtubeLink: "https://www.youtube.com/",
+    //         youtubeLinkTitle: "Math me like I'm 5",
+    //         moreInfoForUser: "more information",
+    //     },
+    // ])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -59,7 +90,7 @@ function InteractivityArea() {
             ])
         }
         setInputText("")
-        setIsAllModalHidden(true)
+        // setIsAllModalHidden(true)
         setTimeout(() => {
             if (scrollRef.current) {
                 scrollRef.current.scrollIntoView({ behavior: "smooth" })
@@ -73,36 +104,18 @@ function InteractivityArea() {
             <div className="relative -top-[1.75rem] right-3 h-[89vh] w-[50vw]">
                 <MessageContainer conversations={conversations} useRefHook={scrollRef} />
 
-                <Modal
-                    userProblem={"Vector Mathematics"}
-                    infoForUser="Information"
-                    yPosition={100}
-                    youtubeLink="https://www.youtube.com/"
-                    youtubeLinkTitle="Math me like I'm 5"
-                    moreInfoForUser="more information"
-                    isAllModalHidden={isAllModalHidden}
-                    setIsAllModalHidden={setIsAllModalHidden}
-                />
-                <Modal
-                    userProblem={"Vector Mathematics"}
-                    infoForUser="Information"
-                    yPosition={200}
-                    youtubeLink="https://www.youtube.com/"
-                    youtubeLinkTitle="Math me like I'm 5"
-                    moreInfoForUser="more information"
-                    isAllModalHidden={isAllModalHidden}
-                    setIsAllModalHidden={setIsAllModalHidden}
-                />
-                <Modal
-                    userProblem={"Vector Mathematics"}
-                    infoForUser="Information"
-                    yPosition={300}
-                    youtubeLink="https://www.youtube.com/"
-                    youtubeLinkTitle="Math me like I'm 5"
-                    moreInfoForUser="more information"
-                    isAllModalHidden={isAllModalHidden}
-                    setIsAllModalHidden={setIsAllModalHidden}
-                />
+                {/* {modalData.map(e => (
+                    <Modal
+                        key={e.infoForUser}
+                        userProblem={e.userProblem}
+                        infoForUser={e.infoForUser}
+                        yPosition={e.yPosition}
+                        youtubeLink={e.youtubeLink}
+                        youtubeLinkTitle={e.youtubeLinkTitle}
+                        moreInfoForUser={e.moreInfoForUser}
+                        isAllModalHidden={isAllModalHidden}
+                    />
+                ))} */}
             </div>
 
             <Form handleSubmit={handleSubmit} inputText={inputText} handleInputChange={handleInputChange} />
