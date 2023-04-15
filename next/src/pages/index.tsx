@@ -23,13 +23,9 @@ const Home: NextPage = () => {
     return (
         <>
             <main className="ml-7 flex h-screen flex-col justify-center">
-                <h1 className="text-9xl">
-                    <div className="flex flex-row">
-                        <span className="font-thin">Math</span>
-                        <span>{" "}</span>
-                        <span className="font-bold">Mentor</span>
-                    </div>
-                </h1>
+                <span className="font-link">
+                    <h1 className="text-9xl">Math Mentor</h1>
+                </span>
                 <DragAndDrop items={item} />
             </main>
         </>

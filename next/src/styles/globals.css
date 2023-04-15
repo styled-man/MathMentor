@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 
-.small-modal{
-    @apply w-[65%] h-fit z-10 absolute;
+.font-link {
+    font-family: "Poppins";
 }
 
-.large-modal{
-    @apply my-[1%] h-[95%] w-[90%] mx-[5%] z-20 absolute;
+.small-modal {
+    @apply absolute z-10 h-fit w-[65%];
+}
+
+.large-modal {
+    @apply absolute z-20 mx-[5%] my-[1%] h-[95%] w-[90%];
 }
