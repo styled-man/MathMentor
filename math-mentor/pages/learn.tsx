@@ -87,10 +87,7 @@ function InteractivityArea() {
 
     useEffect(() => {
         setConversations([
-            {
-                message: `Hello, this is a test for the AI madel. who hnows how well this thing will do? Not me...`,
-                isSentByUser: false,
-            },
+            { message: "**", isSentByUser: false },
             { message: <Filter />, isSentByUser: false },
         ])
     }, [])
@@ -120,17 +117,18 @@ function InteractivityArea() {
     }, [])
 
     useEffect(() => {
-        if (fileUrl == undefined) {
+        if (fileUrl==undefined) {
             return
         }
         getMathpix(`https://math-mentor.s3.amazonaws.com/${fileUrl}`)
-        const getData = async () => {
+        const getData =   async () => {
             await getMathpix(`https://math-mentor.s3.amazonaws.com/${fileUrl}`)
         }
         getData()
     }, [])
 
-    console.log(fileUrl)
+    console.log(fileUrl);
+    
 
     // gets problem from the document and then goes to getting the solution
     const getMathpix = async (fileUrl: string) => {
