@@ -11,10 +11,40 @@ import { useRouter } from "next/router"
 //!     { message: **BOTS MESSAGE**, isSentByUser: false },
 //! ])
 
+type Props = {
+    className?: string
+}
+
+interface MathpixDataType {
+    type: string
+    value: string
+}
+
+interface MathpixTextType {
+    auto_rotate_confidence: number
+    auto_rotate_degrees: number
+    confidence: number
+    confidence_rate: number
+    data: MathpixDataType[]
+    is_handwritten: boolean
+    is_printed: boolean
+    request_id: string
+    text: string
+    version: string
+}
+interface Data {
+    content: string
+    question: string
+}
+
+interface Solution {
+    mistake: string
+    topic: string
+}
+
 const Learn = () => {
     const router = useRouter()
     const { fileUrl } = router.query
-    console.log(fileUrl)
     return (
         <div className="absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center bg-slate-100">
             <div className="relative m-3 ml-4 h-[95vh] w-[50vw] overflow-hidden rounded-md">
@@ -30,6 +60,8 @@ const Learn = () => {
 function InteractivityArea() {
     const [inputText, setInputText] = useState("")
     // const [isAllModalHidden, setIsAllModalHidden] = useState<boolean>(false)
+    const router = useRouter()
+    const { fileUrl } = router.query
 
     const Filter = () => (
         <div className="flex gap-3">
@@ -55,7 +87,10 @@ function InteractivityArea() {
 
     useEffect(() => {
         setConversations([
-            { message: "**BOTS MESSAGE**", isSentByUser: false },
+            {
+                message: `Hello, this is a test for the AI madel. who hnows how well this thing will do? Not me...`,
+                isSentByUser: false,
+            },
             { message: <Filter />, isSentByUser: false },
         ])
     }, [])
@@ -79,15 +114,95 @@ function InteractivityArea() {
         }, 0)
     }
 
+    const [data, setData] = useState<string>("")
+    useEffect(() => {
+        setConversations([{ message: data, isSentByUser: false }])
+    }, [])
+
+    useEffect(() => {
+        if (fileUrl == undefined) {
+            return
+        }
+        getMathpix(`https://math-mentor.s3.amazonaws.com/${fileUrl}`)
+        const getData = async () => {
+            await getMathpix(`https://math-mentor.s3.amazonaws.com/${fileUrl}`)
+        }
+        getData()
+    }, [])
+
+    console.log(fileUrl)
+
+    // gets problem from the document and then goes to getting the solution
+    const getMathpix = async (fileUrl: string) => {
+        console.log("asdfasdf")
+        const response = await fetch("/api/mathpix", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fileUrl,
+            }),
+        })
+
+        const data = (await response.json()) as MathpixTextType
+        setData(data.text)
+
+        console.log("mathplix data:", data)
+
+        await extractData(data)
+    }
+
+    const extractData = async (problem: MathpixTextType) => {
+        const response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_BACKEND_PORT}/extract_data`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                mathpix_data: JSON.stringify({
+                    text: problem.text,
+                    data: problem.data,
+                }),
+            }),
+        })
+
+        const data = (await response.json()) as Data
+
+        console.log("extracted data:", data)
+        await getSolution(data)
+    }
+
+    const getSolution = async (problem: Data) => {
+        const response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_BACKEND_PORT}/solution`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                mathpix_question: problem.question,
+                mathpix_raw: problem.content,
+            }),
+        })
+
+        const data = (await response.json()) as Solution
+
+        console.log("solution:", data)
+    }
+
     return (
         <>
             <div className="relative -top-[1.75rem] right-3 h-[89vh] w-[50vw]">
                 <MessageContainer conversations={conversations} useRefHook={scrollRef} />
             </div>
 
-            <Form handleSubmit={e=>{
-                e.preventDefault()
-            }} inputText={inputText} handleInputChange={handleInputChange} />
+            <Form
+                handleSubmit={e => {
+                    e.preventDefault()
+                }}
+                inputText={inputText}
+                handleInputChange={handleInputChange}
+            />
         </>
     )
 }
