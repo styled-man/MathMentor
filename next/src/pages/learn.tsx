@@ -92,13 +92,14 @@ function InteractivityArea() {
                     isAllModalHidden={isAllModalHidden}
                     setIsAllModalHidden={setIsAllModalHidden}
                 />
+                
                 <Modal
                     userProblem={"Vector Mathematics"}
-                    infoForUser="Information"
+                    infoForUser="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam."
                     yPosition={200}
                     youtubeLink="https://www.youtube.com/"
                     youtubeLinkTitle="Math me like I'm 5"
-                    moreInfoForUser="more information"
+                    moreInfoForUser="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, laboriosam.Lorem"
                     isAllModalHidden={isAllModalHidden}
                     setIsAllModalHidden={setIsAllModalHidden}
                 />

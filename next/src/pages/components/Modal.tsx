@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { HiOutlineInformationCircle } from "react-icons/hi"
@@ -11,7 +11,9 @@ interface IModal {
     youtubeLinkTitle?: string
     moreInfoForUser?: string
     isModalSmall: boolean
+    ref: React.RefObject<HTMLDivElement>
     setIsModalSmall: React.Dispatch<React.SetStateAction<boolean>>
+    height: string
 }
 
 const Modal = ({
@@ -23,14 +25,19 @@ const Modal = ({
     youtubeLinkTitle,
     setIsModalSmall,
     isModalSmall,
+    ref,
+    height,
 }: IModal) => {
     return (
         <div
+            ref={ref}
             style={{
                 top: isModalSmall ? yPosition : 0,
+                height: height,
+                maxHeight: "95%",
             }}
             className={`${isModalSmall ? "small-modal" : "large-modal"}
-ml-5 cursor-pointer rounded bg-white p-2 shadow-2xl duration-300`}
+ml-5 cursor-pointer rounded bg-white p-2 shadow-2xl duration-500`}
             onClick={() => {
                 setIsModalSmall(!isModalSmall)
             }}
@@ -63,6 +70,18 @@ interface IModalContainer {
 }
 
 const ModalContainer = (props: IModalContainer) => {
+    const [height, setHeight] = useState<string>("auto")
+    const ref = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const element = ref.current
+        if (element) {
+            if (element.scrollHeight > element.clientHeight) {
+                setHeight(`${element.scrollHeight} px`)
+            }
+        }
+    }, [])
+
     const [isModalSmall, setIsModalSmall] = useState<boolean>(true)
     const [isModalHidden, setIsModalHidden] = useState<boolean>(false)
 
@@ -75,7 +94,7 @@ const ModalContainer = (props: IModalContainer) => {
     return (
         <>
             <div
-                className="absolute left-[-40px] rounded-full bg-white cursor-pointer"
+                className="absolute left-[-40px] cursor-pointer rounded-full bg-white"
                 style={{
                     top: props.yPosition,
                 }}
@@ -88,7 +107,13 @@ const ModalContainer = (props: IModalContainer) => {
             </div>
 
             {isModalHidden || (
-                <Modal {...props} isModalSmall={isModalSmall} setIsModalSmall={setIsModalSmall} />
+                <Modal
+                    {...props}
+                    ref={ref}
+                    height={height}
+                    isModalSmall={isModalSmall}
+                    setIsModalSmall={setIsModalSmall}
+                />
             )}
         </>
     )
