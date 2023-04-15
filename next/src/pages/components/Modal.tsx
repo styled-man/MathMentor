@@ -28,10 +28,12 @@ const Modal = ({
                     top: isModalSmall ? yPosition : 0,
                 }}
                 className={`${isModalSmall ? "small-modal" : "large-modal"}
-                ml-5 cursor-pointer bg-gray-200 p-2 shadow-2xl duration-300`}
+                ml-5 cursor-pointer bg-white rounded-md p-2 shadow-2xl duration-300`}
                 onClick={() => {
                     setIsModalSmall(!isModalSmall)
                 }}
+                onDrag={() => {setIsModalSmall(true)}}
+                onDr
             >
                 You might need to revisit:{" "}
                 <span className="font-bold text-red-500">{userProblem}</span>
