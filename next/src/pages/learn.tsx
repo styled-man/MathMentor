@@ -2,7 +2,7 @@ import Image from "next/image"
 import React, { useState } from "react"
 import Modal from "./components/Modal"
 
-const learn = () => {
+const Learn = () => {
     return (
         <div className="absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center bg-slate-100">
             <div className="relative m-3 ml-4 h-[95vh] w-[50vw] overflow-hidden rounded-md">
@@ -23,6 +23,7 @@ const learn = () => {
 
 function InteractivityArea() {
     const [inputText, setInputText] = useState("")
+    const [isAllModalHidden, setIsAllModalHidden] = useState<boolean>(false)
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputText(event.target.value)
@@ -32,6 +33,7 @@ function InteractivityArea() {
         event.preventDefault()
         console.log(`User submitted: ${inputText}`)
         setInputText("")
+        setIsAllModalHidden(true)
     }
 
     return (
@@ -40,10 +42,32 @@ function InteractivityArea() {
                 <Modal
                     userProblem={"Vector Mathematics"}
                     infoForUser="Information"
-                    yPosition={0}
+                    yPosition={100}
                     youtubeLink="https://www.youtube.com/"
                     youtubeLinkTitle="Math me like I'm 5"
                     moreInfoForUser="more information"
+                    isAllModalHidden={isAllModalHidden}
+                    setIsAllModalHidden={setIsAllModalHidden}
+                />
+                <Modal
+                    userProblem={"Vector Mathematics"}
+                    infoForUser="Information"
+                    yPosition={200}
+                    youtubeLink="https://www.youtube.com/"
+                    youtubeLinkTitle="Math me like I'm 5"
+                    moreInfoForUser="more information"
+                    isAllModalHidden={isAllModalHidden}
+                    setIsAllModalHidden={setIsAllModalHidden}
+                />
+                <Modal
+                    userProblem={"Vector Mathematics"}
+                    infoForUser="Information"
+                    yPosition={300}
+                    youtubeLink="https://www.youtube.com/"
+                    youtubeLinkTitle="Math me like I'm 5"
+                    moreInfoForUser="more information"
+                    isAllModalHidden={isAllModalHidden}
+                    setIsAllModalHidden={setIsAllModalHidden}
                 />
             </div>
             <form
@@ -68,4 +92,4 @@ function InteractivityArea() {
     )
 }
 
-export default learn
+export default Learn
